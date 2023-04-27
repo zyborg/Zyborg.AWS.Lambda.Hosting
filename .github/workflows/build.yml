@@ -34,11 +34,11 @@ jobs:
           ## Need to run this once to get the dotnet init message out of the way
           dotnet msbuild ./Versions.props /t:DumpVersions /nologo
 
-          $vdumpJson = dotnet msbuild ./Versions.props /t:DumpVersions /nologo
+          $vdumpJson = & dotnet msbuild ./Versions.props /t:DumpVersions /nologo
           Write-Output "Got Version Dump JSON:"
           Write-Output $vdumpJson
 
-          $vdump = "$vdumpJson" | ConvertFrom-Json
+          $vdump = ConvertFrom-Json "$vdumpJson"
           Write-Output "Got Version Dump:"
           Write-Output $vdump
 
@@ -69,3 +69,13 @@ jobs:
 
     - name: Test
       run: dotnet test --no-build --verbosity normal
+
+    - name: Pack
+      run: dotnet pack --configuration Release /p:VersionBuild=$env:BUILDNUM_FOR_VERSION
+
+    - name: Push Artifact
+      uses: actions/upload-artifact@v3.1.2
+      with:
+        name: nuget-pkg
+        path: '**/*.nupkg'
+  
