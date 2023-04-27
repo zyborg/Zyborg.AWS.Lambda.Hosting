@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <!-- Pull in the solution-wide default version -->
+  <Import Project="$(MSBuildProjectDirectory)/../../Version.props" />
+
+  <PropertyGroup>
+    <!-- https://docs.microsoft.com/en-us/dotnet/core/project-sdk/msbuild-props#assembly-attribute-properties -->
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    <Company>Zyborg</Company>
+    <Copyright>Copyright (C) Eugene Bekker.</Copyright>
+    <Product>Zyborg Hosting Model for AWS Lammbda</Product>
+    <AssemblyTitle>Zyborg.AWS.Lambda.Hosting</AssemblyTitle>
+    <Configuration>$(Configuration)</Configuration>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <Compile Remove="_IGNORE\**" />
+    <EmbeddedResource Remove="_IGNORE\**" />
+    <None Remove="_IGNORE\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Amazon.Lambda.Core" Version="2.1.0" />
+    <PackageReference Include="Amazon.Lambda.Logging.AspNetCore" Version="3.1.0" />
+    <PackageReference Include="Amazon.Lambda.RuntimeSupport" Version="1.8.6" />
+    <PackageReference Include="Amazon.Lambda.Serialization.SystemTextJson" Version="2.3.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+  </ItemGroup>
+
+</Project>

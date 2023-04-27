@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{C851AB3F-6DAB-41BA-8FB0-A787CAC5C6CD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zyborg.AWS.Lambda.Hosting", "src\Zyborg.AWS.Lambda.Hosting\Zyborg.AWS.Lambda.Hosting.csproj", "{94AFC275-639D-49C8-8A67-95097DE8A4ED}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{94AFC275-639D-49C8-8A67-95097DE8A4ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94AFC275-639D-49C8-8A67-95097DE8A4ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94AFC275-639D-49C8-8A67-95097DE8A4ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94AFC275-639D-49C8-8A67-95097DE8A4ED}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{94AFC275-639D-49C8-8A67-95097DE8A4ED} = {C851AB3F-6DAB-41BA-8FB0-A787CAC5C6CD}
+	EndGlobalSection
+EndGlobal

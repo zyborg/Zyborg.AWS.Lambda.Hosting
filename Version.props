@@ -1,0 +1,34 @@
+<Project>
+
+  <!--
+    Use this file to define the Solution-wide DEFAULT Version string for projects.
+    Each project can choose to use this version by pulling in these MSBuild props.
+    During a CI build, the VersionBuild property is meant to be overridden to the
+    value of the build number
+    -->
+
+  <PropertyGroup>
+    <!-- Update these as needed to represent SemVer version -->
+    <VersionMajor>1</VersionMajor>
+    <VersionMinor>0</VersionMinor>
+    <VersionPatch>1</VersionPatch>
+
+    <!--
+      This should remain 0 for local/dev builds and should be overridden by CI pipelines
+      by specifying a value for the property such as using the property parameter as in:
+      `dotnet build -p:VersionBuild=$(Build.BuildId)` for example for ADO CI Pipeline.
+      -->
+    <VersionBuild Condition="'$(VersionBuild)'==''">0</VersionBuild>
+
+    <!--
+      We assemble the version components into an aggregate version prefix which will
+      default to the whole version string unless an optional suffix is also provided
+      during the build, in which case it will be appended separated by a dash (`-`).
+      The suffix may be specified to the `dotnet build` command with the
+      `version-suffix` CLI switch:
+        https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-build#options
+      -->
+    <VersionPrefix>$(VersionMajor).$(VersionMinor).$(VersionPatch).$(VersionBuild)</VersionPrefix>
+  </PropertyGroup>
+
+</Project>
