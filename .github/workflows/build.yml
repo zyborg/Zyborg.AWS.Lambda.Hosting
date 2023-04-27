@@ -1,0 +1,44 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: CI/CD
+
+on:
+  push:
+    branches: [ "main" ]
+    tags-ignore: v=*
+  #pull_request:
+  #  branches: [ "main" ]
+  release:
+    types: [published]
+    tags: v=*
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Latest
+      uses: actions/checkout@v3
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+    
+    - name: Extract Version Base
+      shell: pwsh
+      run: |
+        $vdumpJson = & dotnet msbuild ./Version.props /t:DumpVersions /nologo
+        Write-Output "OUTPUT:  $vdumpJson"
+        Write-Host "HOST: $vdumpJson"
+    
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build
+      run: dotnet build --no-restore
+
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
