@@ -33,7 +33,7 @@ jobs:
         $vdumpJson = & dotnet msbuild ./Version.props /t:DumpVersions /nologo
         Write-Host "Ver Dump:  $vdumpJson"
         $verParts = ConvertFrom-Json "$vdumpJson"
-        $ver = $verParts.VersionPrefix
+        $ver = $verParts.Prefix
         
         Write-Output "Writing:"
         Write-Output "- VER_BASE=$ver"
