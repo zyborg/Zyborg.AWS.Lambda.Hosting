@@ -33,10 +33,9 @@ jobs:
         $vdumpJson = & dotnet msbuild ./Version.props /t:DumpVersions /nologo
         Write-Host "Ver Dump:  $vdumpJson"
         $verParts = ConvertFrom-Json $vdumpJson
-        $ver = "$($verParts.VersionPrefix)
+        $ver = $verParts.VersionPrefix
         
-        Write-Output "VER_BASE=$ver"
-        Write-Output "$env:GITHUB_ENV"
+        Write-Output "VER_BASE=$ver" >> "$env:GITHUB_ENV"
 
     - name: Consume Version Base
       shell: pwsh
