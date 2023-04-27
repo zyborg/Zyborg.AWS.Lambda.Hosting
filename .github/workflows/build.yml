@@ -35,12 +35,18 @@ jobs:
         $verParts = ConvertFrom-Json "$vdumpJson"
         $ver = $verParts.VersionPrefix
         
+        Write-Output "Writing:"
+        Write-Output "- VER_BASE=$ver"
+        Write-Output "- $env:GITHUB_ENV"
+        
         Write-Output "VER_BASE=$ver" >> "$env:GITHUB_ENV"
 
     - name: Consume Version Base
       shell: pwsh
       run: |
         Write-Host "Current Version Base:  $($env:VER_BASE)"
+        Write-Host "All Env:"
+        dir env:
         
     - name: Restore dependencies
       run: dotnet restore
