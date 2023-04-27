@@ -28,25 +28,38 @@ jobs:
         dotnet-version: 6.0.x
     
     - name: Extract Version Base
+      id: extract_version_base
       shell: pwsh
       run: |
-        $vdumpJson = & dotnet msbuild ./Version.props /t:DumpVersions /nologo
-        Write-Host "Ver Dump:  $vdumpJson"
-        $verParts = ConvertFrom-Json "$vdumpJson"
-        $ver = $verParts.Prefix
-        
-        Write-Output "Writing:"
-        Write-Output "- VER_BASE=$ver"
-        Write-Output "- $env:GITHUB_ENV"
-        
-        Write-Output "VER_BASE=$ver" >> "$env:GITHUB_ENV"
+          ## Need to run this once to get the dotnet init message out of the way
+          dotnet msbuild ./Versions.props /t:DumpVersions /nologo
 
-    - name: Consume Version Base
+          $vdumpJson = dotnet msbuild ./Versions.props /t:DumpVersions /nologo
+          Write-Output "Got Version Dump JSON:"
+          Write-Output $vdumpJson
+
+          $vdump = $vdumpJson | ConvertFrom-Json
+          Write-Output "Got Version Dump:"
+          Write-Output $vdump
+
+          ## Export as output and ENV VARS for subsequent steps
+          $versionBase = "$($vdump.Major).$($vdump.Minor).$($vdump.Patch)"
+          Write-Host "Setting Version Base:"
+          Write-Host "version_base=$versionBase" >> "$($env:GITHUB_OUTPUT)"
+          Write-Host "VERSION_BASE=$versionBase" >> "$($env:GITHUB_ENV)"
+
+    - name: Compute Build Numbers
+      uses: zyborg/gh-action-buildnum@v1
+      with:
+        gist_token: ${{ secrets.GIST_TOKEN }}
+        version_key: ${{ steps.extract_version_base.outputs.version_base }}
+        set_env: true
+
+    - name: Dump Version Info
       shell: pwsh
       run: |
         Write-Host "Current Version Base:  $($env:VER_BASE)"
-        Write-Host "All Env:"
-        dir env:
+        Write-Host "Current Build Number:  $($env:BUILDNUM_FOR_VERSION)"
         
     - name: Restore dependencies
       run: dotnet restore
