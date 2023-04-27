@@ -49,7 +49,7 @@ jobs:
           ## Need to run this once to get the dotnet init message out of the way
           dotnet msbuild ./Version.props /t:DumpVersions /nologo
 
-          $vdumpJson = & dotnet msbuild ./Versions.props /t:DumpVersions /nologo
+          $vdumpJson = & dotnet msbuild ./Version.props /t:DumpVersions /nologo
           Write-Output "Got Version Dump JSON:"
           Write-Output $vdumpJson
 
