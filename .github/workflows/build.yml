@@ -35,7 +35,9 @@ jobs:
         $verParts = ConvertFrom-Json $vdumpJson
         $ver = "$($verParts.VersionPrefix)
         
-        Write-Host "VER_BASE=$($ver)" >> "$($env:GITHUB_ENV)"
+        Write-Output "VER_BASE=$ver"
+        Write-Output "$env:GITHUB_ENV"
+        #"VER_BASE=$($ver)" >> "$($env:GITHUB_ENV)"
         
     - name: Consume Version Base
       shell: pwsh
