@@ -31,4 +31,16 @@
     <VersionPrefix>$(VersionMajor).$(VersionMinor).$(VersionPatch).$(VersionBuild)</VersionPrefix>
   </PropertyGroup>
 
+  <Target Name="DumpVersions">
+    <Message Importance="High" Text='{' />
+    <Message Importance="High" Text='  "Major": "$(VersionMajor)",' />
+    <Message Importance="High" Text='  "Minor": "$(VersionMinor)",' />
+    <Message Importance="High" Text='  "Patch": "$(VersionPatch)",' />
+    <Message Importance="High" Text='  "Build": "$(VersionBuild)",' />
+    <Message Importance="High" Text='  "Prefix": "$(VersionPrefix)",' />
+    <Message Importance="High" Text='  "Suffix": "$(VersionSuffix)",' />
+    <Message Importance="High" Text='  "Version": "$(Version)"' />
+    <Message Importance="High" Text='}' />
+  </Target>
+
 </Project>
