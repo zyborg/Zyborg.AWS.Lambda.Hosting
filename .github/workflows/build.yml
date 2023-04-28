@@ -73,7 +73,7 @@ jobs:
     - name: Dump Version Info
       shell: pwsh
       run: |
-        Write-Host "Current Version Base:  $($env:VER_BASE)"
+        Write-Host "Current Version Base:  $($env:VERSION_BASE)"
         Write-Host "Current Build Number:  $($env:BUILDNUM_FOR_VERSION)"
         
     - name: Restore dependencies
