@@ -127,8 +127,8 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         nuget sources Add -Name "GPR" \
-          -Source "https://nuget.pkg.github.com/ebekker/index.json" \
-          -UserName ebekker -Password $GITHUB_TOKEN
+          -Source "https://nuget.pkg.github.com/zyborg/index.json" \
+          -UserName zyborg -Password $GITHUB_TOKEN
         find . -name *.nupkg
         nuget setapikey $GITHUB_TOKEN -Source "GPR"
     
