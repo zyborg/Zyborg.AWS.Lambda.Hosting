@@ -14,6 +14,7 @@ on:
     tags: v=*
 
 jobs:
+
   build:
 
     runs-on: ubuntu-latest
@@ -94,4 +95,24 @@ jobs:
       with:
         name: nuget-pkg
         path: '**/*.nupkg'
-  
+    
+  publish-nuget:
+    needs: build
+    if: (github.event_name == 'release')
+    runs-on: ubuntu-latest
+    steps:
+    - name: Pull Artifact
+      uses: actions/download-artifact@v2.1.1
+      with:
+        name: nuget-pkg
+    
+    - name: Setup Nuget
+      uses: NuGet/setup-nuget@v1.2.0
+      with:
+        nuget-version: latest
+    
+    - name: Publish to Nuget
+      env:
+        NUGET_TOKEN: ${{ secrets.NUGET_TOKEN }}
+      run: nuget push nuget-pkg/Zyborg.AWS.Lambda.Hosting*.nupkg -Source nuget.org -ApiKey $NUGET_TOKEN
+
