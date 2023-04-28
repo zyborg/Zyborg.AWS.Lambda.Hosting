@@ -138,6 +138,8 @@ jobs:
       run: |
         nuget push nuget-pkg/src/Zyborg.AWS.Lambda.Hosting/bin/Release/Zyborg.AWS.Lambda.Hosting*.nupkg \
           -Source GPR
+        nuget push nuget-pkg/src/Zyborg.AWS.Lambda.Hosting.Testing/bin/Release/Zyborg.AWS.Lambda.Hosting.Testing*.nupkg \
+          -Source GPR
 
   publish-release:
     needs: build
@@ -161,4 +163,6 @@ jobs:
         NUGET_TOKEN: ${{ secrets.NUGET_TOKEN }}
       run: |
         nuget push nuget-pkg/src/Zyborg.AWS.Lambda.Hosting/bin/Release/Zyborg.AWS.Lambda.Hosting*.nupkg \
+          -Source nuget.org -ApiKey $NUGET_TOKEN
+        nuget push nuget-pkg/src/Zyborg.AWS.Lambda.Hosting.Testing/bin/Release/Zyborg.AWS.Lambda.Hosting.Testing*.nupkg \
           -Source nuget.org -ApiKey $NUGET_TOKEN
