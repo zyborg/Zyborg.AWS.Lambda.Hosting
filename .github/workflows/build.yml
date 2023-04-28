@@ -64,7 +64,7 @@ jobs:
           Write-Host "VERSION_BASE=$versionBase" >> "$($env:GITHUB_ENV)"
 
     - name: Compute Build Numbers
-      uses: zyborg/gh-action-buildnum@v1
+      uses: zyborg/gh-action-buildnum@v2
       with:
         gist_token: ${{ secrets.GIST_TOKEN }}
         version_key: ${{ steps.extract_version_base.outputs.version_base }}
