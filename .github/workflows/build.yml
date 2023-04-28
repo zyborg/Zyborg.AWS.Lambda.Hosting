@@ -59,9 +59,9 @@ jobs:
 
           ## Export as output and ENV VARS for subsequent steps
           $versionBase = "$($vdump.Major).$($vdump.Minor).$($vdump.Patch)"
-          Write-Host "Setting Version Base:"
-          Write-Host "version_base=$versionBase" >> "$($env:GITHUB_OUTPUT)"
-          Write-Host "VERSION_BASE=$versionBase" >> "$($env:GITHUB_ENV)"
+          Write-Output "Setting Version Base:"
+          Write-Output "version_base=$versionBase" >> "$($env:GITHUB_OUTPUT)"
+          Write-Output "VERSION_BASE=$versionBase" >> "$($env:GITHUB_ENV)"
 
     - name: Compute Build Numbers
       uses: zyborg/gh-action-buildnum@v2
