@@ -13,3 +13,12 @@
 * Lambda RUntime Support:
 	* https://aws.amazon.com/blogs/compute/introducing-the-net-6-runtime-for-aws-lambda/
 	* https://github.com/aws/aws-lambda-dotnet/blob/master/Libraries/src/Amazon.Lambda.RuntimeSupport/README.md#using-amazonlambdaruntimesupport-as-a-class-library
+
+
+## Testing Support
+
+* [Unit testing in C#/.NET using xUnit](https://learn.microsoft.com/en-us/dotnet/core/testing/unit-testing-with-dotnet-test)
+* [Test Minimal APIs](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/minimal-apis/test-min-api?view=aspnetcore-7.0)
+* [Minimal APIs Test Samples](https://github.com/dotnet/AspNetCore.Docs.Samples/tree/main/fundamentals/minimal-apis/samples/MinApiTestsSample)
+* [Amazon.Lambda.TestUtilities](https://github.com/aws/aws-lambda-dotnet/blob/master/Libraries/src/Amazon.Lambda.TestUtilities/README.md)
+* 

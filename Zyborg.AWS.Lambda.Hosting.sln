@@ -16,6 +16,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionIt
 		Version.props = Version.props
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{26737B8E-F6E1-4A69-9853-2F376773002F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zyborg.AWS.Lambda.Hosting.Testing.Tests", "test\Zyborg.AWS.Lambda.Hosting.Testing.Tests\Zyborg.AWS.Lambda.Hosting.Testing.Tests.csproj", "{4CAFAB20-CAC5-49C1-A30A-8C10901B670B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zyborg.AWS.Lambda.Hosting.Testing", "src\Zyborg.AWS.Lambda.Hosting.Testing\Zyborg.AWS.Lambda.Hosting.Testing.csproj", "{28C9DF35-FE56-4DF6-AD9C-F13015102252}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,12 +32,22 @@ Global
 		{94AFC275-639D-49C8-8A67-95097DE8A4ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{94AFC275-639D-49C8-8A67-95097DE8A4ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{94AFC275-639D-49C8-8A67-95097DE8A4ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CAFAB20-CAC5-49C1-A30A-8C10901B670B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CAFAB20-CAC5-49C1-A30A-8C10901B670B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CAFAB20-CAC5-49C1-A30A-8C10901B670B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CAFAB20-CAC5-49C1-A30A-8C10901B670B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28C9DF35-FE56-4DF6-AD9C-F13015102252}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28C9DF35-FE56-4DF6-AD9C-F13015102252}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28C9DF35-FE56-4DF6-AD9C-F13015102252}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28C9DF35-FE56-4DF6-AD9C-F13015102252}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{94AFC275-639D-49C8-8A67-95097DE8A4ED} = {C851AB3F-6DAB-41BA-8FB0-A787CAC5C6CD}
+		{4CAFAB20-CAC5-49C1-A30A-8C10901B670B} = {26737B8E-F6E1-4A69-9853-2F376773002F}
+		{28C9DF35-FE56-4DF6-AD9C-F13015102252} = {C851AB3F-6DAB-41BA-8FB0-A787CAC5C6CD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FC19B6C3-846D-454B-9009-963D13E02E69}

@@ -1,9 +1,14 @@
-﻿using Amazon.Lambda.RuntimeSupport;
+﻿using Amazon.Lambda.Core;
+using Amazon.Lambda.RuntimeSupport;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
-using static Zyborg.AWS.Lambda.Hosting.FunctionApp;
+
+// Expose some of our internals to the test-supporting library
+[assembly: InternalsVisibleTo("Zyborg.AWS.Lambda.Hosting.Testing")]
+[assembly: InternalsVisibleTo("Zyborg.AWS.Lambda.Hosting.Tests")]
 
 namespace Zyborg.AWS.Lambda.Hosting;
 
@@ -26,7 +31,9 @@ public partial class FunctionApp : IDisposable, IAsyncDisposable
 
     public static FunctionAppBuilder CreateBuilder()
     {
-        return new FunctionAppBuilder();
+        var builder = new FunctionAppBuilder();
+
+        return builder;
     }
 
     public void Dispose()
@@ -48,11 +55,17 @@ public partial class FunctionApp : IDisposable, IAsyncDisposable
 
     public Task RunAsync(CancellationToken cancellationToken = default)
     {
-        var bootstrap = new LambdaBootstrap(RouteEventToHandler);
+        var bootstrap = new LambdaBootstrap(HandleLambdaBootstrapEvent);
         return bootstrap.RunAsync(cancellationToken);
     }
 
-    internal async Task<InvocationResponse> RouteEventToHandler(InvocationRequest request)
+    private Task<InvocationResponse> HandleLambdaBootstrapEvent(InvocationRequest request)
+    {
+        var fir = new FunctionInvocationRequest(request);
+        return RouteEventToHandler(fir);
+    }
+
+    internal async Task<InvocationResponse> RouteEventToHandler(FunctionInvocationRequest request)
     {
         var hctx = new FunctionHandlerContext(request);
 
@@ -160,6 +173,6 @@ public partial class FunctionApp : IDisposable, IAsyncDisposable
 
     internal class ScopedState
     {
-        public InvocationRequest? _request;
+        public FunctionInvocationRequest? _request;
     }
 }

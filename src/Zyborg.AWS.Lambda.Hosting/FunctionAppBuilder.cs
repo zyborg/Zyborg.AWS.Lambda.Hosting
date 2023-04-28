@@ -22,7 +22,20 @@ public class FunctionAppBuilder
         _Services.AddScoped<FunctionApp.ScopedState>();
         _Services.AddScoped<ILambdaContext>(sp =>
         {
-            return sp.GetRequiredService<FunctionApp.ScopedState>()._request?.LambdaContext!;
+            var state = sp.GetRequiredService<FunctionApp.ScopedState>();
+            if (state == null)
+            {
+                throw new InvalidOperationException("scoped invocation state could not be resolved");
+            }
+            if (state._request == null)
+            {
+                throw new InvalidOperationException("scoped invocation state has not been populated with invocation request");
+            }
+            if (state._request.LambdaContext == null)
+            {
+                throw new InvalidOperationException("scoped invocation state request is missing the Lambda Context");
+            }
+            return state._request.LambdaContext!;
         });
 
         // Default if not overridden later

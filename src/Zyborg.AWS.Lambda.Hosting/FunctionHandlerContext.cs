@@ -8,12 +8,12 @@ public class FunctionHandlerContext
 {
     private Stream? _ResponseStream;
 
-    public FunctionHandlerContext(InvocationRequest request)
+    internal FunctionHandlerContext(FunctionInvocationRequest request)
     {
         Request = request;
     }
 
-    public InvocationRequest Request { get; }
+    internal FunctionInvocationRequest Request { get; }
 
     public ILambdaContext InvocationContext => Request.LambdaContext;
 

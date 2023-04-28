@@ -13,7 +13,8 @@ public partial class FunctionApp
         _eventHandlers.Add(typeof(TEvent), (sp, ev) => handler(sp, (TEvent?)ev));
     }
 
-    public void HandleEvent<TEvent, THandler>() where THandler : IFunctionHandler<TEvent>
+    public void HandleEvent<TEvent, THandler>()
+        where THandler : IFunctionHandler<TEvent>
     {
         _eventHandlers.Add(typeof(TEvent), (sp, ev) =>
         {
@@ -28,7 +29,8 @@ public partial class FunctionApp
     /// Only one default handler may be registered per FunctionApp
     /// (via the <c>HandleDefault*</c> family of methods).
     /// </summary>
-    public void HandleDefault<THandler>() where THandler : IFunctionHandler<JsonDocument>
+    public void HandleDefault<THandler>()
+        where THandler : IFunctionHandler<JsonDocument>
     {
         HandleDefault((sp, arg) =>
         {
@@ -65,7 +67,7 @@ public partial class FunctionApp
     /// </summary>
     public void HandleDefaultEvent<TEvent, THandler>()
         where TEvent : class
-        where THandler : IFunctionHandler<TEvent?>
+        where THandler : IFunctionHandler<TEvent>
     {
         HandleDefaultEvent<TEvent>((sp, ev) =>
         {
