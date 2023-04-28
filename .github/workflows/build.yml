@@ -7,11 +7,15 @@ on:
   push:
     branches: [ "main" ]
     tags-ignore: v=*
+  create:
+    tags:
+    - pre=*
+    - rel=*
   #pull_request:
   #  branches: [ "main" ]
-  release:
-    types: [published]
-    tags: v=*
+  #release:
+  #  types: [published]
+  #  tags: v=*
   workflow_dispatch:
 
 jobs:
@@ -91,17 +95,53 @@ jobs:
       run: dotnet pack --configuration Release "/p:VersionBuild=$BUILDNUM_FOR_VERSION"
 
     - name: Push Artifact
-      if: startsWith(github.ref, 'refs/tags/v=')
+      if: startsWith(github.ref, 'refs/tags/pre=') || startsWith(github.ref, 'refs/tags/rel=')
       uses: actions/upload-artifact@v3.1.2
       with:
         name: nuget-pkg
         path: '**/*.nupkg'
-    
-  publish-nuget:
+  
+  publish-preview:
     needs: build
-    if: (github.event_name == 'release')
+    if: (github.event_name == 'create' && startsWith(github.ref, 'refs/tags/pre='))
     runs-on: ubuntu-latest
     steps:
+    - name: Pull Artifact
+      uses: actions/download-artifact@v2.1.1
+      with:
+        name: nuget-pkg
+        path: nuget-pkg
+    
+    - name: Setup Nuget
+      uses: NuGet/setup-nuget@v1.2.0
+      with:
+        nuget-version: latest
+    
+    - name: Register GPR
+      ## As per:
+      ##  https://help.github.com/en/articles/configuring-nuget-for-use-with-github-package-registry
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        nuget sources Add -Name "GPR" \
+          -Source "https://nuget.pkg.github.com/ebekker/index.json" \
+          -UserName ebekker -Password $GITHUB_TOKEN
+        find . -name *.nupkg
+        nuget setapikey $GITHUB_TOKEN -Source "GPR"
+    
+    - name: Publish to Nuget
+      env:
+        NUGET_TOKEN: ${{ secrets.NUGET_TOKEN }}
+      run: |
+        nuget push nuget-pkg/src/Zyborg.AWS.Lambda.Hosting/bin/Release/Zyborg.AWS.Lambda.Hosting*.nupkg \
+          -Source GPR
+
+  publish-release:
+    needs: build
+    if: (github.event_name == 'create' && startsWith(github.ref, 'refs/tags/rel='))
+    runs-on: ubuntu-latest
+    steps:
+    
     - name: Pull Artifact
       uses: actions/download-artifact@v2.1.1
       with:
@@ -116,5 +156,6 @@ jobs:
     - name: Publish to Nuget
       env:
         NUGET_TOKEN: ${{ secrets.NUGET_TOKEN }}
-      run: nuget push nuget-pkg/Zyborg.AWS.Lambda.Hosting*.nupkg -Source nuget.org -ApiKey $NUGET_TOKEN
-
+      run: |
+        nuget push nuget-pkg/src/Zyborg.AWS.Lambda.Hosting/bin/Release/Zyborg.AWS.Lambda.Hosting*.nupkg \
+          -Source nuget.org -ApiKey $NUGET_TOKEN
