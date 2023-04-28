@@ -10,8 +10,8 @@
   <PropertyGroup>
     <!-- Update these as needed to represent SemVer version -->
     <VersionMajor>1</VersionMajor>
-    <VersionMinor>0</VersionMinor>
-    <VersionPatch>1</VersionPatch>
+    <VersionMinor>1</VersionMinor>
+    <VersionPatch>0</VersionPatch>
 
     <!--
       This should remain 0 for local/dev builds and should be overridden by CI pipelines
