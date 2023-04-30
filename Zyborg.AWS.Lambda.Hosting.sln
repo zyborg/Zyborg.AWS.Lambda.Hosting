@@ -10,6 +10,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{E2A5861B-EF2F-4864-B2A3-0E7C3CF3A4E0}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
+		.github\workflows\build.yml = .github\workflows\build.yml
 		global.json = global.json
 		LICENSE = LICENSE
 		README.md = README.md
@@ -18,9 +19,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionIt
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{26737B8E-F6E1-4A69-9853-2F376773002F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zyborg.AWS.Lambda.Hosting.Testing.Tests", "test\Zyborg.AWS.Lambda.Hosting.Testing.Tests\Zyborg.AWS.Lambda.Hosting.Testing.Tests.csproj", "{4CAFAB20-CAC5-49C1-A30A-8C10901B670B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zyborg.AWS.Lambda.Hosting.Testing.Tests", "test\Zyborg.AWS.Lambda.Hosting.Testing.Tests\Zyborg.AWS.Lambda.Hosting.Testing.Tests.csproj", "{4CAFAB20-CAC5-49C1-A30A-8C10901B670B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zyborg.AWS.Lambda.Hosting.Testing", "src\Zyborg.AWS.Lambda.Hosting.Testing\Zyborg.AWS.Lambda.Hosting.Testing.csproj", "{28C9DF35-FE56-4DF6-AD9C-F13015102252}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zyborg.AWS.Lambda.Hosting.Testing", "src\Zyborg.AWS.Lambda.Hosting.Testing\Zyborg.AWS.Lambda.Hosting.Testing.csproj", "{28C9DF35-FE56-4DF6-AD9C-F13015102252}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
