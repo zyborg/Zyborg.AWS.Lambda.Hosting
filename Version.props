@@ -10,7 +10,7 @@
   <PropertyGroup>
     <!-- Update these as needed to represent SemVer version -->
     <VersionMajor>1</VersionMajor>
-    <VersionMinor>1</VersionMinor>
+    <VersionMinor>2</VersionMinor>
     <VersionPatch>0</VersionPatch>
 
     <!--
