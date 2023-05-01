@@ -76,7 +76,8 @@ public partial class FunctionApp
         public override async Task ExecuteResultAsync(FunctionHandlerContext hctx)
         {
             var resultType = Value.GetType();
-            await JsonSerializer.SerializeAsync(hctx.ResponseStream, Value, resultType);
+            await JsonSerializer.SerializeAsync(hctx.ResponseStream, Value, resultType,
+                hctx.ResultJsonSerializerOptions);
         }
     }
 }

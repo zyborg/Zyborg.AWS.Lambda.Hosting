@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 // Expose some of our internals to the test-supporting library
 [assembly: InternalsVisibleTo("Zyborg.AWS.Lambda.Hosting.Testing")]
@@ -18,6 +19,9 @@ public partial class FunctionApp : IDisposable, IAsyncDisposable
 
     private readonly IServiceProvider _Services;
 
+    // TODO: in the future may expose this for configuration, perhaps in the FunctionAppBuilder
+    private readonly JsonSerializerOptions _resultEncodingJsonSerOptions = DefaultJsonSerializerOptions;
+
     internal FunctionApp(IServiceProvider services)
     {
         _Services = services;
@@ -28,6 +32,23 @@ public partial class FunctionApp : IDisposable, IAsyncDisposable
     public IConfiguration Configuration => _Services.GetRequiredService<IConfiguration>();
 
     public InvocationResponse EmptyResponse => new(EmptyStream, false);
+
+    // Based on the defaults used in the official AWS JSON Ser Opts:
+    //    https://github.com/aws/aws-lambda-dotnet/blob/a7b60810bed4e1eb44678630050f1d2f202986ed/Libraries/src/Amazon.Lambda.Serialization.SystemTextJson/AbstractLambdaJsonSerializer.cs#L131
+    //    https://github.com/aws/aws-lambda-dotnet/blob/a7b60810bed4e1eb44678630050f1d2f202986ed/Libraries/src/Amazon.Lambda.Serialization.SystemTextJson/DefaultLambdaJsonSerializer.cs#L20
+    public static JsonSerializerOptions DefaultJsonSerializerOptions => new()
+    {
+        DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+        PropertyNameCaseInsensitive = true,
+        PropertyNamingPolicy = new Amazon.Lambda.Serialization.SystemTextJson.AwsNamingPolicy(),
+        Converters =
+        {
+            new Amazon.Lambda.Serialization.SystemTextJson.Converters.DateTimeConverter(),
+            new Amazon.Lambda.Serialization.SystemTextJson.Converters.MemoryStreamConverter(),
+            new Amazon.Lambda.Serialization.SystemTextJson.Converters.ConstantClassConverter(),
+            new Amazon.Lambda.Serialization.SystemTextJson.Converters.ByteArrayConverter(),
+        },
+    };
 
     public static FunctionAppBuilder CreateBuilder()
     {
@@ -67,7 +88,10 @@ public partial class FunctionApp : IDisposable, IAsyncDisposable
 
     internal async Task<InvocationResponse> RouteEventToHandler(FunctionInvocationRequest request)
     {
-        var hctx = new FunctionHandlerContext(request);
+        var hctx = new FunctionHandlerContext(request)
+        {
+            ResultJsonSerializerOptions = _resultEncodingJsonSerOptions,
+        };
 
         await ResolveEventAndHandler(hctx);
         await ExecuteHandler(hctx);
@@ -167,7 +191,8 @@ public partial class FunctionApp : IDisposable, IAsyncDisposable
         else
         {
             var resultType = result.GetType();
-            await JsonSerializer.SerializeAsync(hctx.ResponseStream, result, resultType);
+            await JsonSerializer.SerializeAsync(hctx.ResponseStream, result, resultType,
+                _resultEncodingJsonSerOptions);
         }
     }
 

@@ -10,7 +10,7 @@
 	* https://github.com/dotnet/runtime/blob/main/src/libraries/Microsoft.Extensions.Hosting/src/HostApplicationBuilder.cs
 	* https://github.com/dotnet/aspnetcore/blob/main/src/DefaultBuilder/src/WebApplicationBuilder.cs
 	* https://github.com/dotnet/aspnetcore/blob/main/src/DefaultBuilder/src/WebApplication.cs
-* Lambda RUntime Support:
+* Lambda Runtime Support:
 	* https://aws.amazon.com/blogs/compute/introducing-the-net-6-runtime-for-aws-lambda/
 	* https://github.com/aws/aws-lambda-dotnet/blob/master/Libraries/src/Amazon.Lambda.RuntimeSupport/README.md#using-amazonlambdaruntimesupport-as-a-class-library
 

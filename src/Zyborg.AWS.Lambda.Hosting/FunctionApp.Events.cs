@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Zyborg.AWS.Lambda.Hosting;
 
@@ -30,6 +31,9 @@ public partial class FunctionApp
         new(_defaultEventMatchers);
 
     private readonly List<KeyValuePair<Type, Func<JsonDocument, bool>>> _eventMatchers = new();
+
+    // TODO: in the future may expose this for configuration, perhaps in the FunctionAppBuilder
+    private readonly JsonSerializerOptions _eventDecodingJsonSerOptions = DefaultJsonSerializerOptions;
 
     /// <summary>
     /// Adds all pre-defined event matchers, or a specified subset of
@@ -110,7 +114,7 @@ public partial class FunctionApp
             if (m.Value(jdoc))
             {
                 eventType = m.Key;
-                eventValue = jdoc.Deserialize(eventType)!;
+                eventValue = jdoc.Deserialize(eventType, _eventDecodingJsonSerOptions)!;
                 return true;
             }
         }

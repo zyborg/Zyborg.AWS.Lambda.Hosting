@@ -27,6 +27,8 @@ public class FunctionHandlerContext
 
     public Func<IServiceProvider, object?, Task<object?>>? Handler { get; set; }
 
+    public JsonSerializerOptions? ResultJsonSerializerOptions { get; set; }
+
     public object? HandlerResult { get; set; }
 
     public Stream ResponseStream
